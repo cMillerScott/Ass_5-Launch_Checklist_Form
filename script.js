@@ -1,13 +1,14 @@
-//load event
+//window load event
 window.addEventListener("load", function () {
-  //access form div
+  //accesses form div
   let form = document.querySelector("form");
-  //access form input data
+  //accesses form input data
   let pilotNameInput = document.querySelector("input[name=pilotName]");
   let copilotNameInput = document.querySelector("input[name=copilotName]");
   let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
   let cargoMassInput = document.querySelector("input[name=cargoMass]");
-  //listens for submit
+
+  //'submit' event listener
   form.addEventListener("submit", function (event) {
     //prevents form submission to server
     event.preventDefault();
@@ -19,7 +20,7 @@ window.addEventListener("load", function () {
       cargoMassInput.value === ""
     ) {
       alert("All fields are required!");
-      //stops launch status change if user input invalid
+      //stops launch status change if user input absent
       event.stopImmediatePropagation();
     }
     //validates user input data types
@@ -30,14 +31,14 @@ window.addEventListener("load", function () {
       isNaN(cargoMassInput.value) === true
     ) {
       alert("Make sure to enter valid information for each field!");
-      //stops launch status change if user input invalid
+      //stops launch status change if user input data types invalid
       event.stopImmediatePropagation();
     }
   });
 
-  //2nd submit event listener to enable validation to prevent launch status changes
+  //2nd 'submit' event listener to enable validation to prevent launch status changes
   form.addEventListener("submit", function (event) {
-    //references IDs for HTML list items
+    //accesses IDs for HTML list items
     let faultyItemsDiv = document.getElementById("faultyItems");
     let launchStatusText = document.getElementById("launchStatus");
     let pilotStatus = document.getElementById("pilotStatus");
@@ -66,20 +67,20 @@ window.addEventListener("load", function () {
     }
   });
 
-  //fetch planetary data
+  //fetches planetary data
   fetch("https://handlers.education.launchcode.org/static/planets.json").then(
     function (response) {
       response.json().then(function (json) {
         //references div for planetary data
         let missionTargetDiv = document.getElementById("missionTarget");
-        //random selection function
+        //random array selection function
         function randomSelection(arr) {
           let index = Math.floor(Math.random() * arr.length);
           return arr[index];
         }
-        //event listener to cycle through randomized mission targets
+        //'click' event listener randomizes mission target
         missionTargetDiv.addEventListener("click", function () {
-          //variable to hold random json selection
+          //holds random json selection
           randoJson = randomSelection(json);
           //adds randomized json content to mission target div
           missionTargetDiv.innerHTML = `
